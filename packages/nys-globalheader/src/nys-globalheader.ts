@@ -274,6 +274,28 @@ export class NysGlobalHeader extends LitElement {
   };
 
   render() {
+    const nameContainer = html`
+      <div class="nys-globalheader__name-container">
+        ${this.appName?.trim().length > 0
+          ? html`<div
+              class="nys-globalheader__appName nys-globalheader__name"
+            >
+              ${this.appName}
+            </div> `
+          : ""}
+        ${this.agencyName?.trim().length > 0
+          ? html`<div
+              class="nys-globalheader__agencyName nys-globalheader__name ${this.appName?.trim()
+                .length > 0
+                ? ""
+                : "main"}"
+            >
+              ${this.agencyName}
+            </div> `
+          : ""}
+      </div>
+    `;
+
     return html`
       <header class="nys-globalheader">
         <div class="nys-globalheader__main-container">
@@ -295,52 +317,13 @@ export class NysGlobalHeader extends LitElement {
               </div>`
             : ""}
           ${this._renderBrandMark()}
-          ${!this.homepageLink?.trim()
-            ? html`
-                <div class="nys-globalheader__name-container">
-                  ${this.appName?.trim().length > 0
-                    ? html`<div
-                        class="nys-globalheader__appName nys-globalheader__name"
-                      >
-                        ${this.appName}
-                      </div> `
-                    : ""}
-                  ${this.agencyName?.trim().length > 0
-                    ? html`<div
-                        class="nys-globalheader__agencyName nys-globalheader__name ${this.appName?.trim()
-                          .length > 0
-                          ? ""
-                          : "main"}"
-                      >
-                        ${this.agencyName}
-                      </div> `
-                    : ""}
-                </div>
-              `
-            : html`<a
+          ${this.homepageLink?.trim()
+            ? html`<a
                 class="nys-globalheader__name-container-link"
                 href=${this.homepageLink?.trim()}
-              >
-                <div class="nys-globalheader__name-container">
-                  ${this.appName?.trim().length > 0
-                    ? html`<div
-                        class="nys-globalheader__appName nys-globalheader__name"
-                      >
-                        ${this.appName}
-                      </div> `
-                    : ""}
-                  ${this.agencyName?.trim().length > 0
-                    ? html`<div
-                        class="nys-globalheader__agencyName nys-globalheader__name ${this.appName?.trim()
-                          .length > 0
-                          ? ""
-                          : "main"}"
-                      >
-                        ${this.agencyName}
-                      </div> `
-                    : ""}
-                </div>
-              </a>`}
+              >${nameContainer}</a>`
+              : nameContainer
+          }
           <div class="nys-globalheader__content"></div>
           <slot
             style="display: none;"
